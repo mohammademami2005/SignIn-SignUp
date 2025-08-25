@@ -6,7 +6,7 @@
     @apply w-9/12 h-9 p-[2%] rounded-md bg-amber-50 border-b-cyan-600 shadow-sm focus:border-red-500 focus:ring-blue-500 text-lg;
   }
   .form-button {
-    @apply w-3/5 rounded-full bg-cyan-900 text-lg   text-white h-10
+    @apply w-3/5 rounded-full bg-cyan-900 text-lg   text-white h-10 cursor-pointer
   }
   .form-div {
     @apply w-1/2 h-full  shrink-0 flex flex-wrap justify-center items-center duration-500  transition-all  ease-linear
@@ -26,6 +26,8 @@
 
 #app{
   background-image: url(/img/background.jpg);
+  background-size: cover;
+  background-position: center;
 }
 
 /* keremi #d3d1bc */
