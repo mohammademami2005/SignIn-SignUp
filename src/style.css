@@ -1,5 +1,33 @@
 @import "tailwindcss";
-@layer theme{};
-@layer base{};
-@layer components{};
-@layer utilities{};
+@layer theme{}
+@layer base{}
+@layer components {
+  .form-input {
+    @apply w-9/12 h-9 p-[2%] rounded-md bg-amber-50 border-b-cyan-600 shadow-sm focus:border-red-500 focus:ring-blue-500 text-lg;
+  }
+  .form-button {
+    @apply w-3/5 rounded-full bg-cyan-900 text-lg   text-white h-10
+  }
+  .form-div {
+    @apply w-1/2 h-full  shrink-0 flex flex-wrap justify-center items-center duration-500  transition-all  ease-linear
+    
+  }
+}
+
+@layer utilities{
+  .begie{
+    background-color: #d3d1bc;
+  }
+  .fCenter{
+    @apply flex justify-center items-center
+  }
+
+}
+
+#app{
+  background-image: url(/img/background.jpg);
+}
+
+/* keremi #d3d1bc */
+/* #93b3a8 */
+
