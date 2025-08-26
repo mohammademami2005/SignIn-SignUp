@@ -4,21 +4,55 @@ import './style.css'
 const swapBtn = document.querySelector("#swap")
 const swapBox = document.querySelector("#swapBox")
 const signInform = document.querySelector("#signIn")
-
+const siMail = document.querySelector("#signInMail")
+const siBtn = document.querySelector("#siBtn")
 const suPass = document.querySelector("#pass")
+const siPass = document.querySelector("#siPass")
 const suPassList = document.querySelectorAll("#suPassLabel >li")
 const suForm = document.querySelector("#signUp")
 const suEmail = document.getElementById("signUpEmail")
-const label = document.querySelectorAll("#signUpEmailLabel > li")
 const suUsername = document.querySelector("#signUpUsername")
 const suUsernameLabel = document.querySelector("#signUpUsernameLabel")
-  const passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-
+const siLabel = document.querySelector("#siLabel")
+const passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+const mailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 let submitState1 = 0
 let flag = 0
 
-function _mail(mail , mailAtLength) {
-  
+swapBtn.addEventListener("click", (e) => {
+  if (flag % 2 == 0) {
+    swapBox.classList.remove("right-0")
+    swapBox.classList.add("right-1/2")
+    swapBtn.style.backgroundColor = "#d3d1bc"
+    swapBtn.style.color = "black"
+
+    signUp.classList.remove("opacity-0")
+    signUp.classList.add("opacity-100")
+
+    signIn.classList.remove("opacity-100")
+    signIn.classList.add("opacity-0")
+    swapBtn.textContent = "sign in"
+
+  } else {
+    swapBox.classList.remove("right-1/2")
+    swapBox.classList.add("right-0")
+    swapBtn.style.backgroundColor = "#93b3a8"
+    swapBtn.style.color = ""
+
+
+    signUp.classList.remove("opacity-100")
+    signUp.classList.add("opacity-0")
+
+    signIn.classList.remove("opacity-0")
+    signIn.classList.add("opacity-100")
+    swapBtn.textContent = "sign up"
+
+  }
+  flag++
+})
+
+function _mail(mail, mailAtLength, label) {
+
   const rules = [
     { // 0: Empty
       test: f => f.length !== 0,
@@ -56,19 +90,18 @@ function _mail(mail , mailAtLength) {
       fail: "The entered email is invalid."
     }];
 
-    rules.forEach((rule,i)=>{
-      if(rule.test(mail)){
-        label[i].textContent=rule.ok
-        label[i].style.color = "green"
-      }else{
-        label[i].textContent = rule.fail
-        label[i].style.color = "red"
-      }
-    })
+  rules.forEach((rule, i) => {
+    if (rule.test(mail)) {
+      label[i].textContent = rule.ok
+      label[i].style.color = "green"
+    } else {
+      label[i].textContent = rule.fail
+      label[i].style.color = "red"
+    }
+  })
 }
 
 function _pass(pass) {
-  
   const rules = [
     {  // 0: Length
       test: p => p.length >= 8,
@@ -99,10 +132,13 @@ function _pass(pass) {
       test: p => p.length !== 0,
       ok: "",
       fail: "input is empty"
+    },
+    {
+      test: p => passRegx.test(p),
+      ok: "✅",
+      fail: "the entered password is invalid."
     }
   ]
-
-
   rules.forEach((rule, i) => {
     if (rule.test(pass)) {
       suPassList[i].textContent = rule.ok
@@ -115,41 +151,10 @@ function _pass(pass) {
 }
 
 
-swapBtn.addEventListener("click", (e) => {
-  if (flag % 2 == 0) {
-    swapBox.classList.remove("right-0")
-    swapBox.classList.add("right-1/2")
-    swapBtn.style.backgroundColor = "#d3d1bc"
-    swapBtn.style.color = "black"
 
-    signUp.classList.remove("opacity-0")
-    signUp.classList.add("opacity-100")
-
-    signIn.classList.remove("opacity-100")
-    signIn.classList.add("opacity-0")
-    swapBtn.textContent = "sign in"
-
-  } else {
-    swapBox.classList.remove("right-1/2")
-    swapBox.classList.add("right-0")
-    swapBtn.style.backgroundColor = "#93b3a8"
-    swapBtn.style.color = ""
-
-
-    signUp.classList.remove("opacity-100")
-    signUp.classList.add("opacity-0")
-
-    signIn.classList.remove("opacity-0")
-    signIn.classList.add("opacity-100")
-    swapBtn.textContent = "sign up"
-
-  }
-  flag++
-})
 
 // sign up username ------------
 suUsername.addEventListener("input", () => {
-
   let username = suUsername.value
   if (username == '' || username.length < 5) {
     suUsernameLabel.innerHTML = 'Username cannot be empty or less than 5 characters.'
@@ -159,22 +164,20 @@ suUsername.addEventListener("input", () => {
   }
 })
 // sign up username end ------------
+
 suForm.addEventListener("submit", (e) => {
-
-
-
   if (submitState1 < 3) {
     e.preventDefault()
   }
-
 })
 
-// sign up mail ----------------- 
+// sign up mail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
 suEmail.addEventListener("input", () => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
+
   let mail = suEmail.value.trim();
   let mailAtLength = (mail.match(/@/g) || []).length;
-  _mail(mail , mailAtLength)
-
+  _mail(mail, mailAtLength, label)
   //  if (mail === "") {
   //    label[1].style.color = "red"
   //    label[1].textContent = ' cannot be empty'  
@@ -217,18 +220,19 @@ suEmail.addEventListener("input", () => {
   //  }else {
   //   label[5].textContent = "the entered email is invalid."
   //  }
-
 })
+
 suEmail.addEventListener("blur", () => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
   label.forEach(item => item.classList.add("hidden"))
 });
 suEmail.addEventListener("focus", () => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
   label.forEach(item => item.classList.remove("hidden"))
 });
-// sign up mail end --------------
+// sign up mail end \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-// sign up password ------------
-
+// sign up password ======================
 // suPass.addEventListener("input", () => {
 //   let pass = suPass.value
 //   let passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -290,13 +294,26 @@ suPass.addEventListener("input", () => {
   _pass(pass)
 })
 
-
 suPass.addEventListener("blur", () => {
   suPassList.forEach(item => item.classList.add("hidden"))
 });
 suPass.addEventListener("focus", () => {
   suPassList.forEach(item => item.classList.remove("hidden"))
 });
-// sign up pass end ------------
+// sign up password end ===================
 
+
+// signInform.addEventListener("submit", (e) => {
+// })
+siBtn.addEventListener("click", (e) => {
+  console.log(passRegx.test(siPass.value) && mailRegx.test(siMail.value))
+  if (passRegx.test(siPass.value) && mailRegx.test(siMail.value)) {
+    siLabel.textContent = ''
+  } else {
+    e.preventDefault()
+    console.log(siLabel)
+    siLabel.textContent = "mail or password is incorrect"
+    siLabel.classList.add("text-red-500" , "text-sm")
+  }
+})
 
