@@ -1,6 +1,8 @@
 import './style.css'
 
-
+const passEyes = document.querySelector("#eye1")
+const passEyes2 = document.querySelector("#eye2")
+const suSub = document.querySelector("#suSub")
 const swapBtn = document.querySelector("#swap")
 const swapBox = document.querySelector("#swapBox")
 const signInform = document.querySelector("#signIn")
@@ -18,6 +20,7 @@ const passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&
 const mailRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 let submitState1 = 0
 let flag = 0
+
 
 swapBtn.addEventListener("click", (e) => {
   if (flag % 2 == 0) {
@@ -51,8 +54,26 @@ swapBtn.addEventListener("click", (e) => {
   flag++
 })
 
-function _mail(mail, mailAtLength, label) {
+// sign up username ------------
+suUsername.addEventListener("input", () => {
+  let username = suUsername.value
+  if (username == '' || username.length < 5) {
+    suUsernameLabel.innerHTML = 'Username cannot be empty or less than 5 characters.'
+    submitState1++
+  } else {
+    suUsernameLabel.innerHTML = ''
+    suUsername.style.borderColor = "green"
+  }
+})
+// sign up username end ------------
 
+
+
+// sign up mail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
+suEmail.addEventListener("input", (e) => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
+  let mail = suEmail.value.trim();
+  let mailAtLength = (mail.match(/@/g) || []).length;
   const rules = [
     { // 0: Empty
       test: f => f.length !== 0,
@@ -65,8 +86,8 @@ function _mail(mail, mailAtLength, label) {
       fail: "Must contain “@” symbol."
     },
     { // 2: At most one @
-      test: f => mailAtLength <= 1,
-      ok: "",
+      test: f => mailAtLength == 1,
+      ok: "mail is have 1 @",
       fail: "You can’t use more than one “@” symbol."
     },
     { // 3: Dot not at the end & exists
@@ -81,7 +102,7 @@ function _mail(mail, mailAtLength, label) {
     },
     { // 5: Script injection check
       test: f => !(/<script/i.test(f) || /&lt;script/i.test(f)),
-      ok: "",
+      ok: "Script tag not inserted",
       fail: "Script tags are not allowed."
     },
     { // 6: Full email regex validation
@@ -99,9 +120,20 @@ function _mail(mail, mailAtLength, label) {
       label[i].style.color = "red"
     }
   })
-}
+})
+suEmail.addEventListener("blur", () => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
+  label.forEach(item => item.classList.add("hidden"))
+});
+suEmail.addEventListener("focus", () => {
+  const label = document.querySelectorAll("#signUpEmailLabel > li")
+  label.forEach(item => item.classList.remove("hidden"))
+});
+// sign up mail end \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-function _pass(pass) {
+// sign up password ======================
+suPass.addEventListener("input", (e) => {
+  const pass = suPass.value.trim()
   const rules = [
     {  // 0: Length
       test: p => p.length >= 8,
@@ -133,10 +165,15 @@ function _pass(pass) {
       ok: "",
       fail: "input is empty"
     },
-    {
+    {//5:regx
       test: p => passRegx.test(p),
       ok: "✅",
-      fail: "the entered password is invalid."
+      fail: "the entered password is invalid.",
+    },
+    {//6:not allow script
+      test: p => !(/<script/i.test(p) || /&lt;script/i.test(p)),
+      ok: "",
+      fail: "Script tags are not allowed."
     }
   ]
   rules.forEach((rule, i) => {
@@ -148,150 +185,7 @@ function _pass(pass) {
       suPassList[i].style.color = "red"
     }
   })
-}
 
-
-
-
-// sign up username ------------
-suUsername.addEventListener("input", () => {
-  let username = suUsername.value
-  if (username == '' || username.length < 5) {
-    suUsernameLabel.innerHTML = 'Username cannot be empty or less than 5 characters.'
-  } else {
-    suUsernameLabel.innerHTML = ''
-    suUsername.style.borderColor = "green"
-  }
-})
-// sign up username end ------------
-
-suForm.addEventListener("submit", (e) => {
-  if (submitState1 < 3) {
-    e.preventDefault()
-  }
-})
-
-// sign up mail \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ 
-suEmail.addEventListener("input", () => {
-  const label = document.querySelectorAll("#signUpEmailLabel > li")
-
-  let mail = suEmail.value.trim();
-  let mailAtLength = (mail.match(/@/g) || []).length;
-  _mail(mail, mailAtLength, label)
-  //  if (mail === "") {
-  //    label[1].style.color = "red"
-  //    label[1].textContent = ' cannot be empty'  
-  //  }else{
-  //    label[1].style.color = "green"
-  //  }
-  //  if (mail.search(/@/) < 0) {
-  //    label[0].style.color = "red"
-  //    label[0].textContent = 'Must contain “@”'
-  //  }else{
-  //    label[0].style.color = "green"
-  //  }
-  //  if (mailAtLength > 1) {
-  //   label[6].style.color="red"
-  //   label[6].textContent = 'You can’t use more than one “@” symbol.'
-  //  }else{
-  //    label[6].style.color = "green"
-  //  }
-  //  if (mail.indexOf(".") < 0 || (mail.length - mail.lastIndexOf(".")) <= 2) {
-  //    label[2].style.color = "red"
-  //    label[2].textContent = "cannot end with a dot"
-  //  }else{
-  //    label[2].style.color = "green"
-  //  }
-  //  if (mail.length < 10) {
-  //    label[3].style.color = "red"
-  //    label[3].textContent = 'must be at least 10 characters long'
-  //  }else{
-  //    label[3].style.color = "green"
-  //  }
-  //  if (/<script/i.test(mail) || /&lt;script/i.test(mail)) {
-  //    label[4].textContent = "bisharaf"
-  //    label[4].style.color = "red"
-  //  }else{
-  //   label[4].textContent = ''
-  //  }
-  //   if (mail.search(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/) >= 0) {
-  //    label[5].textContent = "✅"
-  //    label[5].style.color = "red"
-  //  }else {
-  //   label[5].textContent = "the entered email is invalid."
-  //  }
-})
-
-suEmail.addEventListener("blur", () => {
-  const label = document.querySelectorAll("#signUpEmailLabel > li")
-  label.forEach(item => item.classList.add("hidden"))
-});
-suEmail.addEventListener("focus", () => {
-  const label = document.querySelectorAll("#signUpEmailLabel > li")
-  label.forEach(item => item.classList.remove("hidden"))
-});
-// sign up mail end \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
-
-// sign up password ======================
-// suPass.addEventListener("input", () => {
-//   let pass = suPass.value
-//   let passRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-//   let flag = 0
-
-//   if (pass.length < 8) {
-//     suPassList[0].style.color = "red"
-//     suPassList[0].textContent = "Password length must be at least 8 characters."
-//   } else {
-//     suPassList[0].style.color = "green"
-//     flag++
-//   }
-
-//   if (/[a-z]/.test(pass)) {
-//     suPassList[1].textContent = 'Lowercase letters are present.'
-//     suPassList[1].style.color = "green"
-//     flag++
-//   } else {
-//     suPassList[1].textContent = 'No lowercase letters found.'
-//     suPassList[1].style.color = "red"
-//   }
-
-//   if (/[A-Z]/.test(pass)) {
-//     suPassList[2].textContent = 'Uppercase letters are present.'
-//     suPassList[2].style.color = "green"
-//     flag++
-//   } else {
-//     suPassList[2].textContent = 'No uppercase letters found.'
-//     suPassList[2].style.color = "red"
-//   }
-
-//   if (/\d/.test(pass)) {
-//     suPassList[3].textContent = 'Numbers are present.'
-//     suPassList[3].style.color = "green"
-//     flag++
-//   } else {
-//     suPassList[3].textContent = 'No numbers found.'
-//     suPassList[3].style.color = "red"
-//   }
-
-//   if (/[@\$!%\*\?&]/.test(pass)) {
-//     suPassList[4].textContent = 'Special characters are present.'
-//     suPassList[4].style.color = "green"
-//     flag++
-//   } else {
-//     suPassList[4].textContent = 'No special characters found.'
-//     suPassList[4].style.color = "red"
-//   }
-
-//   if (passRegx.test(pass)) {
-//     suPassList[5].textContent = ''
-//   } else {
-//     suPassList[5].textContent = "The entered password is invalid."
-//   }
-// })
-
-suPass.addEventListener("input", () => {
-  const pass = suPass.value
-  _pass(pass)
 })
 
 suPass.addEventListener("blur", () => {
@@ -302,18 +196,45 @@ suPass.addEventListener("focus", () => {
 });
 // sign up password end ===================
 
+suSub.addEventListener("click", (e) => {
+  if(!(passRegx.test(suPass.value) || mailRegx.test(suEmail.value))||(suUsername.value == '' || suUsername.length < 5)){
+    e.preventDefault()
+  }
+})
 
-// signInform.addEventListener("submit", (e) => {
-// })
+
 siBtn.addEventListener("click", (e) => {
-  console.log(passRegx.test(siPass.value) && mailRegx.test(siMail.value))
   if (passRegx.test(siPass.value) && mailRegx.test(siMail.value)) {
     siLabel.textContent = ''
   } else {
     e.preventDefault()
-    console.log(siLabel)
     siLabel.textContent = "mail or password is incorrect"
-    siLabel.classList.add("text-red-500" , "text-sm")
+    siLabel.classList.add("text-red-500", "text-sm")
   }
 })
 
+let flag2 = 0
+passEyes.addEventListener("click" , ()=>{
+  if(flag2 %2 == 0){
+    passEyes.setAttribute("src" , "/img/eye.png")
+    siPass.setAttribute("type" , "text")
+  }else{
+    passEyes.setAttribute("src" , "/img/closed-eyes.png")
+    siPass.setAttribute("type" , "password")
+
+  }
+  flag2++
+})
+
+let flag3 = 0
+passEyes2.addEventListener("click" , ()=>{
+  if(flag3 %2 == 0){
+    passEyes2.setAttribute("src" , "/img/eye.png")
+    suPass.setAttribute("type" , "text")
+  }else{
+    passEyes2.setAttribute("src" , "/img/closed-eyes.png")
+    suPass.setAttribute("type" , "password")
+
+  }
+  flag3++
+})

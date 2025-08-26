@@ -1,5 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Playwrite+MX+Guides&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Story+Script&display=swap');
 @import "tailwindcss";
-@layer theme{}
+@theme {
+  --font-calSans: "Playwrite MX Guides", cursive;
+  --font-f2:"Story Script", sans-serif;
+}
 @layer base{}
 @layer components {
   .form-input {
@@ -30,6 +35,4 @@
   background-position: center;
 }
 
-/* keremi #d3d1bc */
-/* #93b3a8 */
 

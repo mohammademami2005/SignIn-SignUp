@@ -3,29 +3,31 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <link rel="icon" type="image/svg+xml" href="/img/eye.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
+  <title>SignIN-SignUp</title>
 </head>
 
 <body>
-  <main id="app" class="bg-gray-200 bg-no-repeat  w-screen h-screen flex justify-center items-center">
+  <main id="app" class="bg-gray-200 bg-no-repeat font-calSans  w-screen h-screen flex justify-center items-center">
     <section
       class="w-9/12 h-9/12 flex justify-center relative shadow-2xl border border-white rounded-2xl overflow-hidden ">
       <form class="form-div dur5000 begie " id="signIn">
         <h2 class="w-full text-2xl font-bold text-center fCenter">sign in</h2>
         <input class="form-input" type="text" name="" id="signInMail" placeholder="email">
         <input class="form-input" type="password" name="" id="siPass" placeholder="password">
+        <img src="/img/closed-eyes.png" alt="" id="eye1" class="w-9 h-9 absolute left-[44%] object-contain ">
         <label id="siLabel"></label>
-        <a href="" class="w-full fCenter h-4 text-gray-800">forget your password ?</a>
+        <a href="" class="w-full fCenter  h-4 text-gray-800">forget your password ?</a>
         <button class="form-button" id="siBtn">sign in</button>
       </form>
       <form class="form-div dur5000 begie opacity-0 " id="signUp">
-        <h2 class="w-full text-2xl font-bold text-center fCenter">sign up</h2>
+        <h2 class="w-full text-2xl font-bold text-center fCenter font-calSans">sign up</h2>
         <input class="form-input" type="text" name="" id="signUpUsername" placeholder="username">
-        <label for="" id="signUpUsernameLabel" class="text-red-500 text-sm"></label>
+        <label for="" id="signUpUsernameLabel" class="text-red-500 text-sm font-f2 text-[15px]"></label>
         <input class="form-input" type="text" name="" id="signUpEmail" placeholder="email">
-        <ul id="signUpEmailLabel" class="flex flex-wrap justify-around items-center *:text-center *:w-1/2 *:text-sm">
+        <ul id="signUpEmailLabel"
+          class="flex flex-wrap gap-0.5 font-f2   *:items-center    justify-around items-center *:h-fit *:w-4/6 *:text-[15px] *:h-10">
           <li></li>
           <li></li>
           <li></li>
@@ -34,8 +36,13 @@
           <li></li>
           <li></li>
         </ul>
-        <input class="form-input" type="password" name="" id="pass" placeholder="password">
-        <ul id="suPassLabel" class="flex flex-wrap justify-around items-center *:text-center *:w-1/2 *:text-sm">
+        <input class="form-input ps-6" type="password" name="" id="pass" placeholder="password">
+        <img src="/img/closed-eyes.png" alt="" id="eye2"
+          class="w-9 h-9 absolute right-[45%] bottom-[27%] object-contain ">
+
+        <ul id="suPassLabel"
+          class="flex flex-wrap gap-0.5 font-f2  *:items-center    justify-around items-center *:h-fit *:w-4/6 *:text-[15px] *:h-10">
+          <li></li>
           <li></li>
           <li></li>
           <li></li>
@@ -44,7 +51,7 @@
           <li></li>
           <li></li>
         </ul>
-        <button class="form-button">sign up</button>
+        <button class="form-button  " id="suSub">sign up</button>
       </form>
       <div class="form-div dur5000 z-50  absolute top-0 right-0 fCenter  bg-transparent" id="swapBox">
         <button class="form-button" id="swap" style="background-color: #93b3a8;">sign up</button>
