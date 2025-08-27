@@ -1,6 +1,5 @@
 # login-signup-form
 
-# Project Title  
 
 📝 فرم ورود و ثبت‌نام با اعتبارسنجی لحظه‌ای (Real‑time Validation)  
 
@@ -18,13 +17,13 @@
 
 ## Demo
 
-Demo: *(می‌توانی اینجا لینک صفحه‌ات روی Vercel یا هر هاستی که منتشر می‌کنی را بگذاری)*
+Demo: [show website](https://sign-in-sign-up-virid.vercel.app/)
 
 ---
 
 ## Screenshots  
 
-![Form Screenshot](./screenshot.png)  
+![Form Screenshot](./public/img/Screenshot%202025-08-27%20033140.png)  
 
 ---
 
@@ -33,7 +32,7 @@ Demo: *(می‌توانی اینجا لینک صفحه‌ات روی Vercel یا
 - 🖊️ **اعتبارسنجی ایمیل** شامل فرمت معتبر، وجود @ و .، طول مناسب، بدون اسکریپت  
 - 🛡️ **اعتبارسنجی رمز عبور** با حروف بزرگ/کوچک، عدد، کاراکتر خاص و طول حداقل ۸  
 - 📛 **بررسی نام کاربری**: حداقل طول و جلوگیری از خالی بودن  
-- 👁️ نمایش/پنهان‌سازی رمز عبور با آیکون چشم  
+- 👁️ نمایش/پنهان‌سازی رمز عبور  
 - 🔄 سوییچ انیمیشنی بین فرم Sign In و Sign Up  
 - 🎨 طراحی واکنش‌گرا با TailwindCSS  
 - 🧩 کدنویسی ماژولار و تمیز (قابل توسعه)  
@@ -43,12 +42,29 @@ Demo: *(می‌توانی اینجا لینک صفحه‌ات روی Vercel یا
 
 ## Teacher
 
-*(اینجا می‌تونی لینک گیت‌هاب معلمت رو بزاری اگر بخوای، مثل مثال خودت)*  
+You can find my teacher's GitHub profile here:  
+[https://github.com/parsaGhorbanian](https://github.com/parsaGhorbanian)
 
 ---
 
-## Run Locally  
+## Run Locally
 
-Clone the project:
+Clone the project
+
 ```bash
-git clone https://github.com/mohammademami2005/login-signup-form
+https://github.com/mohammademami2005/SignIn-SignUp
+```
+
+
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  npm run dev
+```
